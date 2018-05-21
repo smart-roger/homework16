@@ -1,4 +1,5 @@
 #include "common.h"
+#include <map>
 /*
 void save_clusters_in_files(std::vector<sample_type>& samples,
                             std::vector<unsigned long>& clusters,
@@ -21,6 +22,10 @@ void save_clusters_in_files(std::vector<sample_type>& samples,
     }
 }
 */
+
+double distance(sample_type point1, sample_type point2){
+    return point1(0)+point1(1)+point2(0)+point2(1);
+}
 
 int main(int argc, char** argv)
 {
@@ -47,14 +52,39 @@ int main(int argc, char** argv)
         test_file.close();
 
 
-        one_vs_one_decision_function<type_trainer, decision_function<kernel_type> > classificator;
-        deserialize(filename) >> classificator;
+        dlib::one_vs_one_decision_function<type_trainer, dlib::decision_function<kernel_type> > classificator;
+        dlib::deserialize(filename) >> classificator;
 
         sample_type test_sample;
         std::cin >> test_sample;
 
         auto cluster = classificator(test_sample);
         std::cout << "Cluster: " << cluster;
+
+        filename = modelname+".c"std::to_string(cluster);
+        test_file.open(filename);
+        if(!test_file.good())
+        {
+            std::cout << "File for cluster not found!";
+            return -5;
+        }
+        sample_type sample_input;
+        std::multimap<double, sample_type> map_for_cluster;
+
+        test_file >> sample_input;
+        while(!test_file.eof()){
+            if ( test_file.good() ){
+                double dist = distance(sample_input, test_sample);
+                map_for_cluster.insert(std::make_pair(dist, sample_input));
+            }
+            else test_file.clear(std::ios_base::goodbit);
+
+            test_file >> sample_input;
+        }
+
+        for(auto& in_cluster: map_for_cluster){
+            std::cout << in_cluster;
+        }
     }
     catch(std::exception& e){
         std::cout << "Unexpected exception! " << e.what() << std::endl;
