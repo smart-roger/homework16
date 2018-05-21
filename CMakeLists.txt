@@ -10,6 +10,9 @@ include_directories(
 add_executable(rclst
 					clusterizator.cpp )
 
+add_executable(rclss
+					classificator.cpp )
+
 target_link_libraries(rclst dlib openblas)
 
 set_target_properties(rclst PROPERTIES
@@ -19,6 +22,7 @@ set_target_properties(rclst PROPERTIES
 )
 
 install(TARGETS rclst RUNTIME DESTINATION bin)
+install(TARGETS rclss RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
