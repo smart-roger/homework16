@@ -116,7 +116,7 @@ int main(int argc, char** argv)
             std::getline(std::cin, line);
         };
 
-        kcentroid<kernel_type> kc(kernel_type(),0.000001, num_clusters);
+        kcentroid<kernel_type> kc(kernel_type(),0.0000001, num_clusters);
         kkmeans<kernel_type> test(kc);
         std::vector<sample_type> initial_centers;
 
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 
         std::vector<double> labels;
         std::copy(assignments.begin(), assignments.end(), back_inserter(labels));
-        one_vs_one_decision_function<type_trainer> des_func = trainer.train(samples, labels);
+        one_vs_one_decision_function<type_trainer, decision_function<kernel_type> > des_func = trainer.train(samples, labels);
         serialize(modelname + ".dat") << des_func;
 
         for(size_t idx=0; idx<labels.size(); ++ idx){
