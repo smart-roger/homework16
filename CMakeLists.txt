@@ -10,7 +10,7 @@ include_directories(
 add_executable(rclst
 					clusterizator.cpp )
 
-target_link_libraries(rclst dlib)
+target_link_libraries(rclst dlib openblas)
 
 set_target_properties(rclst PROPERTIES
 	CXX_STANDARD 14
