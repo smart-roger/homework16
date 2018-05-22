@@ -14,6 +14,7 @@ add_executable(rclss
 					classificator.cpp )
 
 target_link_libraries(rclst dlib openblas)
+target_link_libraries(rclss dlib openblas)
 
 set_target_properties(rclst PROPERTIES
 	CXX_STANDARD 14

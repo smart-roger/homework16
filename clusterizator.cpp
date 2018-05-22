@@ -60,7 +60,7 @@ int main(int argc, char** argv)
             std::getline(std::cin, line);
         };
 
-        dlib::kcentroid<kernel_type> kc(kernel_type(),0.0000001, num_clusters);
+        dlib::kcentroid<kernel_type> kc(kernel_type(0.0000001),0.0000001, num_clusters);
         dlib::kkmeans<kernel_type> test(kc);
         std::vector<sample_type> initial_centers;
 
@@ -68,14 +68,14 @@ int main(int argc, char** argv)
         dlib::pick_initial_centers(num_clusters, initial_centers, samples, test.get_kernel());
         test.train(samples,initial_centers);
 
-        std::vector<unsigned long> assignments = spectral_cluster(kernel_type(), samples, num_clusters);
+        std::vector<unsigned long> assignments = spectral_cluster(kernel_type(0.0000001), samples, num_clusters);
 
         save_clusters_in_files(samples, assignments, modelname, num_clusters);
 
         type_trainer trainer;
 
         dlib::krr_trainer<kernel_type> trainer_linear;
-        trainer_linear.set_kernel(kernel_type());
+        trainer_linear.set_kernel(kernel_type(0.0000001));
         trainer.set_trainer(trainer_linear);
 
         std::vector<double> labels;

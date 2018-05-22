@@ -11,7 +11,8 @@
 static const size_t num_measurements = 7;
 
 typedef dlib::matrix<double,num_measurements,1> sample_type;
-typedef dlib::linear_kernel<sample_type> kernel_type;
+//typedef dlib::linear_kernel<sample_type> kernel_type;
+typedef dlib::radial_basis_kernel<sample_type> kernel_type;
 typedef dlib::one_vs_one_trainer<dlib::any_trainer<sample_type> > type_trainer;
 
 std::ostream& operator << (std::ostream& stream, sample_type value){
