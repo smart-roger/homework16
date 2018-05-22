@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 project(realty VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
-#project(rclst VERSION 0.0)
+#project(realty VERSION 0.0)
 
 include_directories(
 	include
@@ -16,6 +16,12 @@ add_executable(rclss
 target_link_libraries(rclst dlib openblas)
 
 set_target_properties(rclst PROPERTIES
+	CXX_STANDARD 14
+	CXX_STANDARD_REQUIRED ON
+	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
+)
+
+set_target_properties(rclss PROPERTIES
 	CXX_STANDARD 14
 	CXX_STANDARD_REQUIRED ON
 	COMPILE_OPTIONS -Wpedantic -Wall -Wextra
