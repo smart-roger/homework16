@@ -34,7 +34,7 @@ sample_type parse_line (std::string line){
     char delim;
     sample_type value;
 
-    for(size_t i=0; i<num_measurements; ++i){
+    for(size_t i=0; i<num_measurements-1; ++i){
         sstream >> param;
         if(sstream.fail()){
             param=0;
@@ -48,10 +48,15 @@ sample_type parse_line (std::string line){
     };
 
     sstream >> param;
+    value(num_measurements-1) = param;
+    sstream >> delim;
 
-    if ( param == value( num_measurements-1 ) || ( 1 >= param ) ) {
-        value(num_measurements-1)=0;
-    } else value(num_measurements-1)=1;
+    if(!sstream.eof() && delim==';'){
+        sstream >> param;
+        if ( param == value( num_measurements-1 ) || ( 1 >= param ) ) {
+            value(num_measurements-1)=0;
+        } else value(num_measurements-1)=1;
+    }
 
     return value;
 }

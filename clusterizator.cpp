@@ -83,12 +83,12 @@ int main(int argc, char** argv)
         dlib::one_vs_one_decision_function<type_trainer, dlib::decision_function<kernel_type> > des_func = trainer.train(samples, labels);
         dlib::serialize(modelname + ".dat") << des_func;
 
-        for(size_t idx=0; idx<labels.size(); ++ idx){
+        /*for(size_t idx=0; idx<labels.size(); ++ idx){
             auto calc = des_func(samples.at(idx));
             auto delta = fabs(assignments.at(idx) - calc);
             if ( delta > 0.1)
                 std::cout << std::boolalpha << assignments.at(idx) << ";" << calc << ";" <<(delta < 0.1) << std::endl;
-        }
+        }*/
     }
     catch(std::exception& e){
         std::cout << "Unexpected exception! " << e.what() << std::endl;
